@@ -1,21 +1,17 @@
-const Echo = artifacts.require("./EchoTest.sol");
+const EchoApp = artifacts.require("./EchoApp.sol");
 
 
-const testval = "best windex";
+const testIndexName = "best windex";
 
 
-contract("Echo", accounts => {
-  it("...simple value set should set and and return ", async () => {
-    const echoInstance = await Echo.deployed();
-    await echoInstance.setTestVal(testval, {from: accounts[0]});
-    
-    /*
-    const tx = await simpleStore.set(newValue, {from: accounts[0]})
-    assert.equal(tx.logs[0].args._value.toNumber(), newValue)
-    */
+contract("EchoApp", accounts => {
+  it("...simple create index and return", async () => {
+    const echoInstance = await EchoApp.deployed();
+    const tx  = await echoInstance.createIndex(testIndexName, accounts[1], {from: accounts[0]});
+    let retval = await echoInstance.getIndexName();
 
-    let retval = await echoInstance.getTestVal();
-    console.log(retval);
+    assert.equal (tx.logs[0].args._name, testIndexName, "not blockchain tx value expected for test index created");
+    assert.equal(retval, testIndexName, "created index name should match")
   });
 });
 
