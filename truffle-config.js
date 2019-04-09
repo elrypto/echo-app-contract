@@ -5,7 +5,7 @@ const LoomTruffleProvider = require('loom-truffle-provider')
 const HDWalletProvider = require('truffle-hdwallet-provider')
 
 module.exports = {
-  contracts_build_directory: join(__dirname, './../../echo/echo-web/src/contracts'),
+  contracts_build_directory: join(__dirname, './src/contracts'),
   compilers: {
     solc: {
       version: '0.4.24'
@@ -18,6 +18,18 @@ module.exports = {
         const chainId = 'default'
         const writeUrl = 'http://127.0.0.1:46658/rpc'
         const readUrl = 'http://127.0.0.1:46658/query'
+        const loomTruffleProvider = new LoomTruffleProvider(chainId, writeUrl, readUrl, privateKey)
+        loomTruffleProvider.createExtraAccountsFromMnemonic("gravity top burden flip student usage spell purchase hundred improve check genre", 10)
+        return loomTruffleProvider
+      },
+      network_id: '*'
+    },
+    loom_dapp_chain_dev2: {
+      provider: function() {
+        const privateKey = readFileSync(path.join(__dirname, 'private_key'), 'utf-8')
+        const chainId = 'default'
+        const writeUrl = 'http://192.168.43.120:46658/rpc'
+        const readUrl = 'http://192.168.43.120:46658/query'
         const loomTruffleProvider = new LoomTruffleProvider(chainId, writeUrl, readUrl, privateKey)
         loomTruffleProvider.createExtraAccountsFromMnemonic("gravity top burden flip student usage spell purchase hundred improve check genre", 10)
         return loomTruffleProvider
