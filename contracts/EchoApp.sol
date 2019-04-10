@@ -4,27 +4,20 @@ pragma solidity ^0.4.22;
 
 contract EchoApp {
 
-  mapping (address => address) schainAddrToEthAddr;
-  mapping (address => string) ownerToIndexName;
+  mapping (address => string) ethAddrToIndexName;
   mapping (address => address) indexToFollowers;
 
-  event indexCreated(string _name, address _address);
+  event indexCreated(string _name, address _ethAddress, address _sChainAddress);
 
 
   function createIndex(string memory _name, address _addrOnEthNetwork) public {
-    ownerToIndexName[msg.sender] = _name;
-    schainAddrToEthAddr[msg.sender] = _addrOnEthNetwork;
-    emit indexCreated(_name, msg.sender);
+    ethAddrToIndexName[_addrOnEthNetwork] = _name;
+    emit indexCreated(_name, _addrOnEthNetwork, msg.sender);
   }
 
-  function getIndexName() public view returns (string memory) {
-    return ownerToIndexName[msg.sender];
+  function getIndexName(address _ethAddr) public view returns (string memory) {
+    return ethAddrToIndexName[_ethAddr];
   }
-
-  function getEthAddress(address _addr) public view returns (address){
-    return schainAddrToEthAddr[_addr];
-  }
-
 
 }
  
