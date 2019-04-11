@@ -1,5 +1,5 @@
-pragma solidity ^0.4.22;
-
+pragma solidity ^0.4.23;
+// pragma solidity ^0.5.0;
 
 
 contract EchoApp {
@@ -7,6 +7,7 @@ contract EchoApp {
   mapping (address => string) ethAddrToIndexName;
   mapping (uint => address) followerToIndex;
   mapping (address => uint) indexToFollowersCount;
+  uint totalFollowersCount;
 
   address[] followers;
 
@@ -43,6 +44,7 @@ contract EchoApp {
     uint id = followers.push(_followerEthAddr) - 1;
     followerToIndex[id] = _followerEthAddr;
     indexToFollowersCount[_toFollowEthAddr]++;
+    totalFollowersCount++;
     emit indexFollowed(_toFollowEthAddr, _followerEthAddr);
   } 
 
@@ -59,9 +61,20 @@ contract EchoApp {
     return result;
   }
   
-  //function followerAddrFromId
+  function getTotalFollowers() public view returns(uint){
+    return totalFollowersCount;
+  }
 
-  //function allFollowers
+
+  function getAllFollowers() public view returns (address[]){
+    address[] memory ids = new address[](totalFollowersCount);
+
+    for (uint i=0; i < totalFollowersCount; i++){
+      ids[i] = followers[i];
+    }
+    
+    return ids;
+  }
 
 }
  

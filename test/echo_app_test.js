@@ -43,8 +43,19 @@ contract("EchoApp", accounts => {
     count = await echoInstance.followCount(INDEX_OWNER);
     assert.equal(2, count, 'should be 2 follower, that we just created, at this stage');
 
+    let totalFollowers = await echoInstance.getTotalFollowers();
+    console.log("totalFollowers;", totalFollowers);
+
+    let allFollowers = await echoInstance.getAllFollowers();
+    console.log("allFollowers", allFollowers);
+
     let followerIds = await echoInstance.allFollowersOfAnIndex(INDEX_OWNER);
-   
+    for (let i in followerIds){
+      console.log(i, followerIds[i]); 
+      //assert.equal(followerIds[i], 0, "expect first item to have id of 0");
+      //assert.equal(followerIds[i], 1, "expect second item to have id of 1");
+    }
+
   });
 
 
